@@ -15,50 +15,46 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  username      String    @unique
-  hash          String
-  createdAt     DateTime  @default(now())
-  urlAvatar     String    @default("/avatars/default.png")
-  profilename   String?
-  bio           String?
-  tweets        Tweet[]
-  retweets      Retweet[]
-  likes         Like[]
-  actionsByUser Event[]
-  actionsOnUser Event[]   @relation("target")
-  followers     Follows[] @relation("follower")
-  following     Follows[] @relation("following")
+  id          String       @id @default(cuid())
+  email       String       @unique
+  username    String       @unique
+  hash        String
+  createdAt   DateTime     @default(now())
+  urlAvatar   String?
+  profileName String?
+  bio         String?
+  tweets      Tweet[]
+  retweets    Retweet[]
+  likes       Like[]
+  tweetEvents TweetEvent[]
+  followers   Follows[]    @relation("follower")
+  following   Follows[]    @relation("following")
 }
 
 model Tweet {
-  id              String    @id @default(cuid())
+  id              String       @id @default(cuid())
   plainText       String
-  createdAt       DateTime  @default(now())
+  createdAt       DateTime     @default(now())
   deletedAt       DateTime?
   media           String[]
-  author          User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author          User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId        String
-  originalTweet   Tweet?    @relation("replies", fields: [originalTweetId], references: [id], onDelete: Cascade)
+  originalTweet   Tweet?       @relation("replies", fields: [originalTweetId], references: [id], onDelete: Cascade)
   originalTweetId String?
-  replies         Tweet[]   @relation("replies")
+  replies         Tweet[]      @relation("replies")
   likes           Like[]
   retweets        Retweet[]
   hashtags        Hashtag[]
-  events          Event[]
+  events          TweetEvent[]
 }
 
-model Event {
-  id            String  @id @default(cuid())
-  type          String
+model TweetEvent {
+  id            String @id @default(cuid())
   createdAt     String
   authorId      String
-  author        User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  targetUserId  String?
-  targetUser    User?   @relation("target", fields: [targetUserId], references: [id], onDelete: Cascade)
-  targetTweetId String?
-  targetTweet   Tweet?  @relation(fields: [targetTweetId], references: [id], onDelete: Cascade)
+  author        User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  targetTweetId String
+  targetTweet   Tweet  @relation(fields: [targetTweetId], references: [id], onDelete: Cascade)
 }
 
 model Follows {
