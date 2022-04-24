@@ -4,6 +4,8 @@ import cors from "cors"
 import cookieSession from "cookie-session"
 import morgan from "morgan"
 import "dotenv/config"
+import { PrismaClient } from "@prisma/client"
+const prisma = new PrismaClient()
 
 const app = express()
 const PORT = process.env.PORT
