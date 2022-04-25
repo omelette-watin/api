@@ -1,10 +1,11 @@
-import express from "express"
 import { Request, Response } from "express"
+import express from "express"
 import cors from "cors"
 import cookieSession from "cookie-session"
 import morgan from "morgan"
 import "dotenv/config"
 import { PrismaClient } from "@prisma/client"
+import makeRoutes from "./src/makeRoutes"
 const prisma = new PrismaClient()
 
 const app = express()
@@ -28,5 +29,7 @@ app.use(morgan("dev"))
 app.get("/", async (req: Request, res: Response) => {
   return res.status(200).json("🐤 Tweeteur's API 🐤")
 })
+
+makeRoutes({ app, prisma })
 
 app.listen(PORT, () => console.log(`🚀 @ http://localhost:${PORT}`))
