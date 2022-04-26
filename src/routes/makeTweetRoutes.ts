@@ -390,6 +390,14 @@ const makeTweetRoutes = ({
                     },
                   },
                 },
+                author: {
+                  select: {
+                    username: true,
+                    profileName: true,
+                    urlAvatar: true,
+                    id: true,
+                  },
+                },
                 _count: {
                   select: {
                     replies: true,
