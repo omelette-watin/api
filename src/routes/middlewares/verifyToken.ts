@@ -19,11 +19,11 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
       res.status(401).send({
         message: "Unauthorized",
       })
+    } else {
+      req.userId = id
+      next()
     }
-    req.userId = id
   }
-
-  next()
 }
 
 export default verifyToken
