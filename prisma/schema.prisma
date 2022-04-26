@@ -49,12 +49,13 @@ model Tweet {
 }
 
 model TweetEvent {
-  id            String @id @default(cuid())
-  createdAt     String
+  id            String   @id @default(cuid())
+  type          String
+  createdAt     DateTime
   authorId      String
-  author        User   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   targetTweetId String
-  targetTweet   Tweet  @relation(fields: [targetTweetId], references: [id], onDelete: Cascade)
+  targetTweet   Tweet    @relation(fields: [targetTweetId], references: [id], onDelete: Cascade)
 }
 
 model Follows {
