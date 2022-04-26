@@ -52,9 +52,7 @@ const makeUserRoutes = ({
         message: "User not found",
       })
     } catch (err: any) {
-      res.status(500).send({
-        message: err.message,
-      })
+      res.sendErrorMessage(err)
     }
   })
 
@@ -82,9 +80,7 @@ const makeUserRoutes = ({
           follows,
         })
       } catch (err: any) {
-        res.status(500).send({
-          message: err.message,
-        })
+        res.sendErrorMessage(err)
       }
     }
   )
@@ -121,9 +117,7 @@ const makeUserRoutes = ({
         message: "User not found",
       })
     } catch (err: any) {
-      res.status(500).send({
-        message: err.message,
-      })
+      res.sendErrorMessage(err)
     }
   })
 
@@ -167,9 +161,7 @@ const makeUserRoutes = ({
           })
         }
       } catch (err: any) {
-        res.status(500).send({
-          message: err.message,
-        })
+        res.sendErrorMessage(err)
       }
     }
   )
@@ -205,9 +197,7 @@ const makeUserRoutes = ({
           updatedUser,
         })
       } catch (err: any) {
-        res.status(500).send({
-          message: err.message,
-        })
+        res.sendErrorMessage(err)
       }
     }
   )

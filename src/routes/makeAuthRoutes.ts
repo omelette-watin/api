@@ -82,7 +82,7 @@ const makeAuthRoutes = ({
           message: "Account successfully created",
         })
       } catch (err: any) {
-        res.status(500).send(err.message)
+        res.sendErrorMessage(err)
       }
     }
   )
@@ -124,7 +124,7 @@ const makeAuthRoutes = ({
 
         res.status(401).send("Invalid Credentials")
       } catch (err: any) {
-        res.status(500).send(err.message)
+        res.sendErrorMessage(err)
       }
     }
   )
