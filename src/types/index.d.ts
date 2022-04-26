@@ -5,5 +5,8 @@ declare global {
     interface Request {
       userId: string
     }
+    interface Response {
+      sendErrorMessage: (err: any) => void
+    }
   }
 }

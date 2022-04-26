@@ -1,4 +1,4 @@
-import { Request, Response } from "express"
+import { NextFunction, Request, Response } from "express"
 import express from "express"
 import cors from "cors"
 import cookieSession from "cookie-session"
@@ -26,6 +26,11 @@ app.use(
   })
 )
 app.use(morgan("dev"))
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.sendErrorMessage = (err: any) =>
+    res.status(500).send({ error: err.message })
+  next()
+})
 app.get("/", async (req: Request, res: Response) => {
   return res.status(200).json("🐤 Tweeteur's API 🐤")
 })
