@@ -99,7 +99,7 @@ const makeTweetRoutes = ({
             tweetEventId: newTweetEvent.id,
           })
         }
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
@@ -177,7 +177,7 @@ const makeTweetRoutes = ({
             tweetEventId: newTweetEvent.id,
           })
         }
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
@@ -233,7 +233,7 @@ const makeTweetRoutes = ({
             .status(200)
             .send({ message: "Tweet liked", tweetEventId: newTweetEvent.id })
         }
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
@@ -290,7 +290,7 @@ const makeTweetRoutes = ({
             tweetEventId: newTweetEvent.id,
           })
         }
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
@@ -403,7 +403,7 @@ const makeTweetRoutes = ({
         })
 
         res.status(200).send(myfeed)
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
@@ -504,7 +504,7 @@ const makeTweetRoutes = ({
       })
 
       res.status(200).send(tweetReplies)
-    } catch (err: any) {
+    } catch (err) {
       res.sendErrorMessage(err)
     }
   })
@@ -560,7 +560,7 @@ const makeTweetRoutes = ({
       })
 
       res.status(200).send(tweetsByHashtags)
-    } catch (err: any) {
+    } catch (err) {
       res.sendErrorMessage(err)
     }
   })
@@ -612,7 +612,7 @@ const makeTweetRoutes = ({
       })
 
       res.status(200).send(tweetsByHashtags)
-    } catch (err: any) {
+    } catch (err) {
       res.sendErrorMessage(err)
     }
   })

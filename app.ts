@@ -27,8 +27,7 @@ app.use(
 )
 app.use(morgan("dev"))
 app.use((req: Request, res: Response, next: NextFunction) => {
-  res.sendErrorMessage = (err: any) =>
-    res.status(500).send({ error: err.message })
+  res.sendErrorMessage = (err) => res.status(500).send({ error: err.message })
   next()
 })
 app.get("/", async (req: Request, res: Response) => {

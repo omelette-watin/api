@@ -51,7 +51,7 @@ const makeUserRoutes = ({
       res.status(405).send({
         message: "User not found",
       })
-    } catch (err: any) {
+    } catch (err) {
       res.sendErrorMessage(err)
     }
   })
@@ -79,7 +79,7 @@ const makeUserRoutes = ({
         res.status(200).send({
           follows,
         })
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
@@ -116,7 +116,7 @@ const makeUserRoutes = ({
       res.status(404).send({
         message: "User not found",
       })
-    } catch (err: any) {
+    } catch (err) {
       res.sendErrorMessage(err)
     }
   })
@@ -160,7 +160,7 @@ const makeUserRoutes = ({
             message: "User followed",
           })
         }
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
@@ -196,7 +196,7 @@ const makeUserRoutes = ({
           message: "User successfuly updated",
           updatedUser,
         })
-      } catch (err: any) {
+      } catch (err) {
         res.sendErrorMessage(err)
       }
     }
