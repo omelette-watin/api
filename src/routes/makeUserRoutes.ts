@@ -108,7 +108,9 @@ const makeUserRoutes = ({
         res.status(200).send({
           id: user.id,
           username: user.username,
-          profilename: user.profileName || user.username,
+          profileName: user.profileName || user.username,
+          createdAt: user.createdAt,
+          urlAvatar: user.urlAvatar || "/avatars/default.svg",
           stats: user._count,
         })
       } else {

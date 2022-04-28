@@ -119,10 +119,12 @@ const makeAuthRoutes = ({
               token,
               message: "You are logged in",
             })
+          } else {
+            res.status(401).send("Invalid Credentials")
           }
+        } else {
+          res.status(401).send("Invalid Credentials")
         }
-
-        res.status(401).send("Invalid Credentials")
       } catch (err) {
         res.sendErrorMessage(err)
       }
