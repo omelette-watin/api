@@ -8,9 +8,7 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
 
   if (!token) {
     res.status(403).send({ message: "No token provided" })
-  }
-
-  if (token) {
+  } else {
     const { id } = jwt.verify(
       token as string,
       SECRET_KEY as string

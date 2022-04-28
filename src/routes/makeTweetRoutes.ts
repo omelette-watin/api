@@ -587,7 +587,7 @@ const makeTweetRoutes = ({
             lt: (cursor as string) || undefined,
           },
         },
-        take: 2,
+        take: 8,
         orderBy: {
           createdAt: "desc",
         },

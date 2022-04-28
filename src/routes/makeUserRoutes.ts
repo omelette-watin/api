@@ -46,11 +46,11 @@ const makeUserRoutes = ({
           retweets: me.retweets.map((retweet) => retweet.tweetId),
           following: me.following.map((follow) => follow.followingId),
         })
+      } else {
+        res.status(405).send({
+          message: "User not found",
+        })
       }
-
-      res.status(405).send({
-        message: "User not found",
-      })
     } catch (err) {
       res.sendErrorMessage(err)
     }
@@ -85,7 +85,7 @@ const makeUserRoutes = ({
     }
   )
 
-  app.get("/users/:username", async (req: Request, res: Response) => {
+  app.get("/users/name/:username", async (req: Request, res: Response) => {
     const { username } = req.params
 
     try {
@@ -111,11 +111,11 @@ const makeUserRoutes = ({
           profilename: user.profileName || user.username,
           stats: user._count,
         })
+      } else {
+        res.status(404).send({
+          message: "User not found",
+        })
       }
-
-      res.status(404).send({
-        message: "User not found",
-      })
     } catch (err) {
       res.sendErrorMessage(err)
     }
