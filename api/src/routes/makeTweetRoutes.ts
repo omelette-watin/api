@@ -359,18 +359,18 @@ const makeTweetRoutes = ({
             id: {
               lt: cursor as string | undefined,
             },
-            author: {
-              OR: [
-                {
+            OR: [
+              {
+                author: {
                   followers: {
                     some: {
                       followerId: userId,
                     },
                   },
                 },
-                { id: userId },
-              ],
-            },
+              },
+              { authorId: userId, type: "tweet" },
+            ],
           },
           take: 8,
           orderBy: {
