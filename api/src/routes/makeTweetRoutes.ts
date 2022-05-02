@@ -369,7 +369,7 @@ const makeTweetRoutes = ({
                   },
                 },
               },
-              { authorId: userId, type: "tweet" },
+              { authorId: userId, OR: [{ type: "tweet" }, { type: "reply" }] },
             ],
           },
           take: 8,
@@ -587,7 +587,7 @@ const makeTweetRoutes = ({
     } = req
 
     try {
-      const tweetsByHashtags = await prisma.tweetEvent.findMany({
+      const tweetsByUser = await prisma.tweetEvent.findMany({
         where: {
           authorId: userId,
           id: {
@@ -639,7 +639,7 @@ const makeTweetRoutes = ({
         },
       })
 
-      res.status(200).send(tweetsByHashtags)
+      res.status(200).send(tweetsByUser)
     } catch (err) {
       res.sendErrorMessage(err)
     }
