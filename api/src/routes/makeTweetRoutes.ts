@@ -360,11 +360,16 @@ const makeTweetRoutes = ({
               lt: cursor as string | undefined,
             },
             author: {
-              followers: {
-                some: {
-                  followerId: userId,
+              OR: [
+                {
+                  followers: {
+                    some: {
+                      followerId: userId,
+                    },
+                  },
                 },
-              },
+                { id: userId },
+              ],
             },
           },
           take: 8,
@@ -582,7 +587,7 @@ const makeTweetRoutes = ({
     } = req
 
     try {
-      const tweetsByHashtags = await prisma.tweet.findMany({
+      const tweetsByHashtags = await prisma.tweetEvent.findMany({
         where: {
           authorId: userId,
           id: {
@@ -593,6 +598,7 @@ const makeTweetRoutes = ({
         orderBy: {
           createdAt: "desc",
         },
+        distinct: ["targetTweetId"],
         include: {
           author: {
             select: {
@@ -602,20 +608,32 @@ const makeTweetRoutes = ({
               id: true,
             },
           },
-          originalTweet: {
-            select: {
+          targetTweet: {
+            include: {
+              originalTweet: {
+                select: {
+                  author: {
+                    select: {
+                      username: true,
+                    },
+                  },
+                },
+              },
               author: {
                 select: {
                   username: true,
+                  profileName: true,
+                  urlAvatar: true,
+                  id: true,
                 },
               },
-            },
-          },
-          _count: {
-            select: {
-              replies: true,
-              likes: true,
-              retweets: true,
+              _count: {
+                select: {
+                  replies: true,
+                  likes: true,
+                  retweets: true,
+                },
+              },
             },
           },
         },
