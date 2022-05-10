@@ -85,6 +85,44 @@ const makeUserRoutes = ({
     }
   )
 
+  app.get(
+    "/users/suggestions",
+    verifyToken,
+    async (req: Request, res: Response) => {
+      const {
+        userId,
+        query: { take },
+      } = req
+
+      try {
+        const suggestions = await prisma.user.findMany({
+          where: {
+            NOT: {
+              followers: {
+                some: {
+                  followerId: userId,
+                },
+              },
+            },
+            id: {
+              not: userId,
+            },
+          },
+          take: parseInt(take as string) || 3,
+          orderBy: {
+            followers: {
+              _count: "desc",
+            },
+          },
+        })
+
+        res.status(200).send(suggestions)
+      } catch (err) {
+        res.sendErrorMessage(err)
+      }
+    }
+  )
+
   app.get("/users/name/:username", async (req: Request, res: Response) => {
     const { username } = req.params
 
