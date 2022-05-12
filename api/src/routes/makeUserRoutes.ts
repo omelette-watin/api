@@ -123,6 +123,26 @@ const makeUserRoutes = ({
     }
   )
 
+  app.get("/users/search/:search", async (req: Request, res: Response) => {
+    const { search } = req.params
+
+    try {
+      const users = await prisma.user.findMany({
+        where: {
+          OR: [
+            {
+              profileName: { startsWith: search },
+            },
+            { username: { startsWith: search } },
+          ],
+        },
+      })
+
+      res.status(200).send(users)
+    } catch (err) {
+      res.sendErrorMessage(err)
+    }
+  })
   app.get("/users/name/:username", async (req: Request, res: Response) => {
     const { username } = req.params
 
