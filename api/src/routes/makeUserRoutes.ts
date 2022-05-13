@@ -131,10 +131,23 @@ const makeUserRoutes = ({
         where: {
           OR: [
             {
-              profileName: { startsWith: search },
+              profileName: { startsWith: search, mode: "insensitive" },
             },
-            { username: { startsWith: search } },
+            { username: { startsWith: search, mode: "insensitive" } },
           ],
+        },
+        take: 15,
+        include: {
+          _count: {
+            select: {
+              followers: true,
+            },
+          },
+        },
+        orderBy: {
+          followers: {
+            _count: "desc",
+          },
         },
       })
 
@@ -143,6 +156,7 @@ const makeUserRoutes = ({
       res.sendErrorMessage(err)
     }
   })
+
   app.get("/users/name/:username", async (req: Request, res: Response) => {
     const { username } = req.params
 
