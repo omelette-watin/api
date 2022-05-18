@@ -424,6 +424,35 @@ const makeTweetRoutes = ({
     }
   )
 
+  app.get("/tweets/search/:search", async (req: Request, res: Response) => {
+    const {
+      params: { search },
+      query: { cursor },
+    } = req
+
+    try {
+      const tweets = await prisma.tweet.findMany({
+        where: {
+          plainText: {
+            contains: search,
+            mode: "insensitive",
+          },
+          id: {
+            lt: cursor as string | undefined,
+          },
+        },
+        take: 8,
+        orderBy: {
+          createdAt: "desc",
+        },
+      })
+
+      res.status(200).send(tweets)
+    } catch (err) {
+      res.sendErrorMessage(err)
+    }
+  })
+
   app.get("/tweets/:tweetId", async (req: Request, res: Response) => {
     const { tweetId } = req.params
 
