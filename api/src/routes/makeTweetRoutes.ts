@@ -445,6 +445,32 @@ const makeTweetRoutes = ({
         orderBy: {
           createdAt: "desc",
         },
+        include: {
+          author: {
+            select: {
+              username: true,
+              profileName: true,
+              urlAvatar: true,
+              id: true,
+            },
+          },
+          originalTweet: {
+            select: {
+              author: {
+                select: {
+                  username: true,
+                },
+              },
+            },
+          },
+          _count: {
+            select: {
+              replies: true,
+              likes: true,
+              retweets: true,
+            },
+          },
+        },
       })
 
       res.status(200).send(tweets)

@@ -51,6 +51,13 @@ const makeHashtagRoutes = ({
         orderBy: {
           createdAt: "desc",
         },
+        include: {
+          _count: {
+            select: {
+              tweets: true,
+            },
+          },
+        },
       })
 
       res.status(200).send(hashtags)

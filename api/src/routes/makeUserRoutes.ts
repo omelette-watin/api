@@ -124,19 +124,25 @@ const makeUserRoutes = ({
   )
 
   app.get("/users/search/:search", async (req: Request, res: Response) => {
-    const { search } = req.params
+    const {
+      params: { search },
+      query: { cursor },
+    } = req
 
     try {
       const users = await prisma.user.findMany({
         where: {
           OR: [
             {
-              profileName: { startsWith: search, mode: "insensitive" },
+              profileName: { contains: search, mode: "insensitive" },
             },
-            { username: { startsWith: search, mode: "insensitive" } },
+            { username: { contains: search, mode: "insensitive" } },
           ],
+          id: {
+            gt: cursor as string | undefined,
+          },
         },
-        take: 15,
+        take: 8,
         include: {
           _count: {
             select: {
@@ -145,9 +151,7 @@ const makeUserRoutes = ({
           },
         },
         orderBy: {
-          followers: {
-            _count: "desc",
-          },
+          createdAt: "asc",
         },
       })
 
